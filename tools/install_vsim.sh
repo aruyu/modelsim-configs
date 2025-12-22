@@ -1,6 +1,6 @@
 #!/bin/bash
 #==
-#   NOTE      - setup.sh
+#   NOTE      - install_vsim.sh
 #   Author    - Aru
 #
 #   Created   - 2025.12.18
@@ -74,12 +74,12 @@ while true; do
   case ${SELECTION} in
     [Aa][Rr][Cc][Hh] )          CURRENT_JOB=Arch; break;;
     [Uu][Bb][Uu][Nn][Tt][Uu] )  CURRENT_JOB=Ubuntu; break;;
-    * )                         echo "Wrong answer.";;
+    * )                         script_error_println "Wrong answer.";;
   esac
 done
 
 
-echo Installing dependencies...
+script_notify_println "Installing dependencies..."
 
 if [[ ${CURRENT_JOB} = ${ARCH} ]]; then
   # Arch
@@ -97,7 +97,7 @@ elif [[ ${CURRENT_JOB} = ${UBUNTU} ]]; then
 fi
 
 
-echo Running setup file...
+script_notify_println "Running setup file..."
 
 if [[ ! -e "./ModelSimSetup-20.1.1.720-linux.run" ]]; then
   wget https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run
@@ -105,8 +105,7 @@ fi
 
 ./ModelSimSetup-20.1.1.720-linux.run --modelsim_edition modelsim_ase --accept_eula 1 --mode unattended --unattendedmodeui minimal &
 PID=$!
-echo Press enter when the setup dialog says \"Setup complete.\"
-read -n 1
+read -p "Press enter when the setup dialog says 'Setup complete.'"
 kill $PID
 
 cd /opt/intelFPGA/20.1/modelsim_ase
@@ -126,4 +125,4 @@ Categories=Development
 EOF
 sudo mv ./modelsim.desktop /usr/share/applications
 
-script_print_notify "${CURRENT_JOB} installation successfully done.\n"
+script_notify_println "${CURRENT_JOB} installation successfully done."
