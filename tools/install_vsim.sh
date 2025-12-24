@@ -96,19 +96,27 @@ elif [[ ${CURRENT_JOB} = ${ubuntu} ]]; then
 
 fi
 
+setupfile="ModelSimSetup-20.1.1.720-linux.run"
 
 script_notify_println "Downloading setup file..."
 
-if [[ ! -e "./ModelSimSetup-20.1.1.720-linux.run" ]]; then
-  wget https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run
+if [[ ! -e "./${setupfile}" ]]; then
+  wget https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/${setupfile}
 fi
 
-./ModelSimSetup-20.1.1.720-linux.run --modelsim_edition modelsim_ase --accept_eula 1 --mode unattended --unattendedmodeui minimal &
+script_notify_println "Running setup file..."
+
+sudo chmod a+x ${setupfile}
+
+./${setupfile} --modelsim_edition modelsim_ase --accept_eula 1 --mode unattended --unattendedmodeui minimal &
+
+read -p "Enter the path that modelsim is installed : " -i "/opt/intelFPGA" -e INSTALL_PATH
+
 PID=$!
 read -p "Press enter when the setup dialog says 'Setup complete.'"
 kill $PID
 
-cd /opt/intelFPGA/20.1/modelsim_ase
+cd ${INSTALL_PATH}/20.1/modelsim_ase
 sed -i 's/linux_rh60/linux/' vco
 sed -i 's/dir=`dirname "$arg0"`/dir=`dirname "$arg0"`\nexport LD_LIBRARY_PATH=${dir}\/lib32/' vco
 # adds "export LD_LIBRARY_PATH=${dir}/lib32" after $dir is found.
@@ -117,7 +125,7 @@ cat > ./modelsim.desktop <<EOF
 [Desktop Entry]
 Name=ModelSim
 Comment=ModelSim
-Exec=/opt/intelFPGA/20.1/modelsim_ase/bin/vsim
+Exec=${INSTALL_PATH}/20.1/modelsim_ase/bin/vsim
 Icon=modelsim
 Terminal=true
 Type=Application
