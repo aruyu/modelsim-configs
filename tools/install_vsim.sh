@@ -107,14 +107,9 @@ fi
 script_notify_println "Running setup file..."
 
 sudo chmod a+x ${setupfile}
+./${setupfile} --modelsim_edition modelsim_ase --accept_eula 1 || error_exit "ModelSim installation failed."
 
-./${setupfile} --modelsim_edition modelsim_ase --accept_eula 1 --mode unattended --unattendedmodeui minimal &
-
-read -p "Enter the path that modelsim is installed : " -i "/opt/intelFPGA" -e INSTALL_PATH
-
-PID=$!
-read -p "Press enter when the setup dialog says 'Setup complete.'"
-kill $PID
+read -p "Enter the path that modelsim is installed : " -i "$HOME/intelFPGA" -e INSTALL_PATH
 
 cd ${INSTALL_PATH}/20.1/modelsim_ase
 sed -i 's/linux_rh60/linux/' vco
@@ -134,3 +129,5 @@ EOF
 sudo mv ./modelsim.desktop /usr/share/applications
 
 script_notify_println "ModelSim installation for ${CURRENT_JOB} successfully done."
+
+exit 0
