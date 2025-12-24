@@ -66,8 +66,8 @@ if [[ $EUID -eq 0 ]]; then
   error_exit "This script must be run as USER!"
 fi
 
-ARCH=Arch
-UBUNTU=Ubuntu
+arch="Arch"
+ubuntu="Ubuntu"
 
 while true; do
   read -p "Enter what you want to install (Arch, Ubuntu): " SELECTION
@@ -81,23 +81,23 @@ done
 
 script_notify_println "Installing dependencies..."
 
-if [[ ${CURRENT_JOB} = ${ARCH} ]]; then
+if [[ ${CURRENT_JOB} = ${arch} ]]; then
   # Arch
   sudo pacman -S --needed expat fontconfig freetype2 xorg-fonts-type1 glibc gtk2 libcanberra libpng libpng12 libice libsm util-linux ncurses tcl zlib libx11 libxau libxdmcp libxext libxft libxrender libxt libxtst
   sudo pacman -S --needed lib32-expat lib32-fontconfig lib32-freetype2 lib32-glibc lib32-gtk2 lib32-libcanberra lib32-libpng lib32-libpng12 lib32-libice lib32-libsm lib32-util-linux lib32-ncurses lib32-zlib lib32-libx11 lib32-libxau lib32-libxdmcp lib32-libxext lib32-libxft lib32-libxrender lib32-libxt lib32-libxtst
   trizen -S --needed tcllib ncurses5-compat-libs lib32-ncurses5-compat-libs
 
-elif [[ ${CURRENT_JOB} = ${UBUNTU} ]]; then
+elif [[ ${CURRENT_JOB} = ${ubuntu} ]]; then
   # Ubuntu
-  sudo dpkg --add-architecture i386 
-  sudo apt-get update 
-  sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 
-  sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 
+  sudo dpkg --add-architecture i386
+  sudo apt-get update
+  sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
+  sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0
 
 fi
 
 
-script_notify_println "Running setup file..."
+script_notify_println "Downloading setup file..."
 
 if [[ ! -e "./ModelSimSetup-20.1.1.720-linux.run" ]]; then
   wget https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run
@@ -125,4 +125,4 @@ Categories=Development
 EOF
 sudo mv ./modelsim.desktop /usr/share/applications
 
-script_notify_println "${CURRENT_JOB} installation successfully done."
+script_notify_println "ModelSim installation for ${CURRENT_JOB} successfully done."
