@@ -83,9 +83,9 @@ script_notify_println "Installing dependencies..."
 
 if [[ ${CURRENT_JOB} = ${arch} ]]; then
   # Arch
-  sudo pacman -S --needed expat fontconfig freetype2 xorg-fonts-type1 glibc gtk2 libcanberra libpng libpng12 libice libsm util-linux ncurses tcl zlib libx11 libxau libxdmcp libxext libxft libxrender libxt libxtst
-  sudo pacman -S --needed lib32-expat lib32-fontconfig lib32-freetype2 lib32-glibc lib32-gtk2 lib32-libcanberra lib32-libpng lib32-libpng12 lib32-libice lib32-libsm lib32-util-linux lib32-ncurses lib32-zlib lib32-libx11 lib32-libxau lib32-libxdmcp lib32-libxext lib32-libxft lib32-libxrender lib32-libxt lib32-libxtst
-  trizen -S --needed tcllib ncurses5-compat-libs lib32-ncurses5-compat-libs
+  sudo pacman -S --needed expat fontconfig freetype2 xorg-fonts-type1 glibc libcanberra libpng libice libsm util-linux ncurses tcl zlib libx11 libxau libxdmcp libxext libxft libxrender libxt libxtst
+  sudo pacman -S --needed lib32-expat lib32-fontconfig lib32-freetype2 lib32-glibc lib32-libcanberra lib32-libpng lib32-libice lib32-libsm lib32-util-linux lib32-ncurses lib32-zlib lib32-libx11 lib32-libxau lib32-libxdmcp lib32-libxext lib32-libxft lib32-libxrender lib32-libxt lib32-libxtst
+  trizen -S --needed tcllib gtk2 lib32-gtk2 libpng12 lib32-libpng12 ncurses5-compat-libs lib32-ncurses5-compat-libs
 
 elif [[ ${CURRENT_JOB} = ${ubuntu} ]]; then
   # Ubuntu
