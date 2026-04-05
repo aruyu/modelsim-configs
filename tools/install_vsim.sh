@@ -94,7 +94,6 @@ elif [[ ${CURRENT_JOB} = ${ubuntu} ]]; then
   sudo apt-get update
   sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386
   sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0
-
 fi
 
 setupfile="ModelSimSetup-20.1.1.720-linux.run"
@@ -117,7 +116,7 @@ sed -i 's/linux_rh60/linux/' vco
 sed -i 's/dir=`dirname "$arg0"`/dir=`dirname "$arg0"`\nexport LD_LIBRARY_PATH=${dir}\/lib32/' vco
 # adds "export LD_LIBRARY_PATH=${dir}/lib32" after $dir is found.
 
-cat > ./modelsim.desktop <<EOF
+sudo cat > ./modelsim.desktop <<EOF
 [Desktop Entry]
 Name=ModelSim
 Comment=ModelSim
